@@ -11,13 +11,13 @@
         <table>
           <tbody>
             <tr>
-              <td class="right bottom"><button data-ng-click="choice(0)">{[{board[0]}]}</button></td>
+              <td class="right bottom"><button data-ng-click="choice(0)">{[{ board[0] }]}</button></td>
               <td class="right bottom"><button data-ng-click="choice(1)">{[{board[1]}]}</button></td>
               <td class="bottom"><button data-ng-click="choice(2)">{[{board[2]}]}</button></td>
             </tr>   
             <tr>
               <td class="right bottom"><button data-ng-click="choice(3)">{[{board[3]}]}</button></td>
-              <td class="right bottom"><button data-ng-click="choice(4)">{[{board[4]}]]}</button></td>
+              <td class="right bottom"><button data-ng-click="choice(4)">{[{ board[4] }]}</button></td>
               <td class="bottom"><button data-ng-click="choice(5)">{[{board[5]}]}</button></td>
             </tr>   
             <tr>
@@ -40,101 +40,90 @@
 </div>
 
 <style>
-	body{
+	body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
   background: linear-gradient(-21deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
   background-size: cover;
   background-repeat: no-repeat;
-  .row{    
-    background-color: transparent;
-    .col-sm-8{    
-      padding: 7vh 0px 7vh; 
-    }
-
-    .col-sm-4{      
-      .box{
-        background-color: white;
-        margin: 7vh 20px 0px 20px;
-        padding: 25px 30px; 
-        border-radius: 5px;
-        box-shadow: 0px 2px 7px #777;
-        
-        h1{
-          font-size: 35px;          
-          font-family: Poppins,sans-serif;
-          font-weight: 700;
-        }
-        
-        p{
-          margin: 25px 0px;
-          font-family: Poppins,sans-serif;
-          font-weight: 500;
-        }
-        
-        .btn{
-          background-color: red;
-          color: white;          
-          font-family: Poppins,sans-serif;
-          font-size: 14px;
-          letter-spacing: 1px;
-          text-transform: uppercase;
-          font-weight: 700;
-          float: right;
-          &:hover{
-            background-color: #840404;
-            color: white;
-          }         
-        }        
-      }  
-    }
-  }
-  
-  table{
-    margin: 0 auto;
-    tbody{
-      tr{
-        td{
-          width: 120px;
-          height: 120px;
-          text-align: center;
-          overflow: hidden;          
-          button{
-            width: 100%;
-            height: 100%;
-            background-color: transparent;            
-            border: none;
-            font-size: 60px;
-            font-family: Poppins,sans-serif;
-            font-weight: 900;
-            color: white;
-            transition: all .3s;
-            &:hover{
-              cursor: pointer;
-              background-color: rgba(255,255,255, 0.2);
-            }
-            
-            &:focus{
-              outline: none;
-            }
-          }          
-        }
-        .right{
-          border-right: 7px solid #eee;         
-        }
-        .bottom{
-          border-bottom: 7px solid #eee;
-        }
-      }
-    }
-  }
 }
+body .row {
+  background-color: transparent;
+}
+body .row .col-sm-8 {
+  padding: 7vh 0px 7vh;
+}
+body .row .col-sm-4 .box {
+  background-color: white;
+  margin: 7vh 20px 0px 20px;
+  padding: 25px 30px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 7px #777;
+}
+body .row .col-sm-4 .box h1 {
+  font-size: 35px;
+  font-family: Poppins,sans-serif;
+  font-weight: 700;
+}
+body .row .col-sm-4 .box p {
+  margin: 25px 0px;
+  font-family: Poppins,sans-serif;
+  font-weight: 500;
+}
+body .row .col-sm-4 .box .btn {
+  background-color: red;
+  color: white;
+  font-family: Poppins,sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+  float: right;
+}
+body .row .col-sm-4 .box .btn:hover {
+  background-color: #840404;
+  color: white;
+}
+body table {
+  margin: 0 auto;
+}
+body table tbody tr td {
+  width: 120px;
+  height: 120px;
+  text-align: center;
+  overflow: hidden;
+}
+body table tbody tr td button {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  font-size: 60px;
+  font-family: Poppins,sans-serif;
+  font-weight: 900;
+  color: white;
+  transition: all .3s;
+}
+body table tbody tr td button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+body table tbody tr td button:focus {
+  outline: none;
+}
+body table tbody tr .right {
+  border-right: 7px solid #eee;
+}
+body table tbody tr .bottom {
+  border-bottom: 7px solid #eee;
+}
+
 </style>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
 
 <script>
 var app = angular.module('myApp', ['ngSanitize']);
@@ -144,15 +133,31 @@ app.config(function($interpolateProvider) {
 });
 
 
-app.controller('myCtrl', function($scope) {
-	alert(555)
-
-
+app.controller('myCtrl', function($scope, $http) {
 	  set(); 
   
   $scope.reset = function(){
     set();
   }
+
+  $scope.init = function(){
+  	var url = 'init/', data = 'hhhh',config='contenttype';
+
+	$http.post(url, data, config).then(function (response) {
+
+	// This function handles success
+	data = response.data
+	$scope.last_action = data['action']
+	console.log($scope.last_action)
+	$scope.choice($scope.last_action)
+	}, function (response) {
+
+	// this function handles error
+
+	});
+  }
+
+  $scope.init()
    
   $scope.choice = function(x){  
     if(!$scope.end){

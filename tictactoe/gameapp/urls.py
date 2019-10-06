@@ -6,6 +6,6 @@ from gameapp.views import *
 
 urlpatterns = [
     path('', home),
-    # path('game/', include('app_urls')),
+    path('init/', first_random_step),
 
 ]
