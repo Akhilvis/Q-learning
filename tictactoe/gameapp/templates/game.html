@@ -28,14 +28,14 @@
           </tbody>
         </table>
       </div>
-      <div class="col-sm-4">
+    <!--   <div class="col-sm-4">
         <div class="box">
           <h1>Current Turn: {[{turn}]}</h1> 
           <p ng-bind-html="message"></p>                   
           <button class="btn" data-ng-click = "reset()">Reset</button>
           <br>
         </div>
-      </div>
+      </div> -->
     </div>
 </div>
 
@@ -220,11 +220,25 @@ app.controller('myCtrl', function($scope, $http) {
 	// This function handles success
 	data = response.data
 	$scope.last_action = data['action']
+	$scope.choice($scope.last_action)
 	$scope.end = data['is_end']
 	if ($scope.end) {
-		alert(data['winner'])
+
+		setTimeout(function() {
+
+			if(data['winner'] == 1)
+			{
+				alert('Computer won!')
+			}
+			else if(data['winner'] == -1){
+				alert('You won!Congratz..')
+			}
+			else{
+				alert('Oops...its a tie!')
+			}
+		}, 700);
+
 	}
-	$scope.choice($scope.last_action)
 	}, function (response) {
 
 	// this function handles error

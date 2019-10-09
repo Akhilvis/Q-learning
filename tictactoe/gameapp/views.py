@@ -31,7 +31,7 @@ def first_random_step(request):
 
 @csrf_exempt
 def take_policy_step(request):
-
+	winner = None
 	data = json.loads(request.body)
 	position = data['position']
 	if not data['source']:
@@ -76,6 +76,6 @@ def convert_postion_tuple(position):
 	return position_dict[str(position)]
 
 def load_board():
-	current_board = np.loadtxt('board.txt', dtype=int)
+	current_board = np.loadtxt('board.txt')
 	return current_board
     

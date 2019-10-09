@@ -144,7 +144,11 @@ class State:
 
 	def policy_move(self):
 	    positions = self.availablePositions()
+	    print("posibile actions.......",positions)
+	    print('policy_move--board',self.board)
+	    print('policy_move--symbol...',self.playerSymbol)
 	    p1_action = self.p1.chooseAction(positions, self.board, self.playerSymbol)
+	    print('policy_move....action...',p1_action)
 	    # take action and upate board state
 	    self.updateState(p1_action)
 	    self.showBoard()
@@ -153,7 +157,7 @@ class State:
 
 
 	def save_board(self,board):
-		np.savetxt('board.txt', board, fmt='%d')
+		np.savetxt('board.txt', board)
 
 
 	# play with human
@@ -227,15 +231,20 @@ class Player:
             idx = np.random.choice(len(positions))
             action = positions[idx]
         else:
+            print("wise action....")
             value_max = -999
             for p in positions:
                 next_board = current_board.copy()
                 next_board[p] = symbol
+                print('next_board............',next_board)
                 next_boardHash = self.getHash(next_board)
+                print('next_boardHash..............',next_boardHash)
+                print(next_boardHash in self.states_value)
 #                 print('next_boardHash>>>>>>>>', next_boardHash)
 #                 print('states_value>>>>>>>>', self.states_value)
                 value = 0 if self.states_value.get(next_boardHash) is None else self.states_value.get(next_boardHash)
                 # print("value", value)
+                print(p,'==========================',value)
                 if value >= value_max:
                     value_max = value
                     action = p
